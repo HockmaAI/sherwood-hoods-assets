@@ -1,0 +1,47 @@
+{
+  "name": "Sherwood Hoods #3856",
+  "description": "One of 4444 outlaws of Sherwood, minted on Robinhood Chain.",
+  "image": "https://cdn.jsdelivr.net/gh/HockmaAI/sherwood-hoods-assets@main/svg/3856.svg",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Gold Vault",
+      "rarity": "Epic"
+    },
+    {
+      "trait_type": "Tunic",
+      "value": "Gold-Trim",
+      "rarity": "Epic"
+    },
+    {
+      "trait_type": "Hood",
+      "value": "Camo",
+      "rarity": "Rare"
+    },
+    {
+      "trait_type": "Face",
+      "value": "Bearded",
+      "rarity": "Common"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Gold",
+      "rarity": "Rare"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Empty Hands",
+      "rarity": "Uncommon"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Mask",
+      "rarity": "Epic"
+    },
+    {
+      "trait_type": "Companion",
+      "value": "Little John",
+      "rarity": "Legendary"
+    }
+  ]
+}

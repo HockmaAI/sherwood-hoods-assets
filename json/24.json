@@ -1,0 +1,47 @@
+{
+  "name": "Sherwood Hoods #24",
+  "description": "One of 4444 outlaws of Sherwood, minted on Robinhood Chain.",
+  "image": "https://cdn.jsdelivr.net/gh/HockmaAI/sherwood-hoods-assets@main/svg/24.svg",
+  "attributes": [
+    {
+      "trait_type": "Background",
+      "value": "Dawn Forest",
+      "rarity": "Common"
+    },
+    {
+      "trait_type": "Tunic",
+      "value": "Brown Leather",
+      "rarity": "Common"
+    },
+    {
+      "trait_type": "Hood",
+      "value": "Classic Green",
+      "rarity": "Common"
+    },
+    {
+      "trait_type": "Face",
+      "value": "Masked",
+      "rarity": "Legendary"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Glow",
+      "rarity": "Legendary"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Empty Hands",
+      "rarity": "Uncommon"
+    },
+    {
+      "trait_type": "Accessory",
+      "value": "Quiver",
+      "rarity": "Uncommon"
+    },
+    {
+      "trait_type": "Companion",
+      "value": "None",
+      "rarity": "Common"
+    }
+  ]
+}
