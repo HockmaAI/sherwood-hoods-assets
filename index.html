@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sherwood Hoods mint</title>
+  <style>
+    :root { --ink:#0d0d0d; --moss:#0b1a12; --moss2:#12261c; --gold:#c9a227; --goldl:#e8c547; --cream:#e8dcc4; --line:#1f3d2c; --muted:#6b8f7a; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; padding:0; background:var(--moss); color:var(--cream); font-family: Palatino, Georgia, serif; }
+    body { min-height:100vh; background: radial-gradient(ellipse at 20% 0%, #1b3a28 0%, transparent 50%), radial-gradient(ellipse at 90% 10%, #3a1020 0%, transparent 40%), var(--moss); }
+    header { padding:40px 24px 20px; text-align:center; border-bottom:2px solid var(--gold); }
+    h1 { margin:0 0 8px; font-size:clamp(1.8rem,5vw,3.2rem); letter-spacing:.08em; color:var(--goldl); text-transform:uppercase; }
+    .sub { margin:0; opacity:.85; }
+    .meta { margin-top:10px; font-size:.85rem; color:var(--gold); letter-spacing:.12em; text-transform:uppercase; }
+    .wrap { max-width:1100px; margin:0 auto; padding:32px 20px 64px; }
+    .layout { display:grid; grid-template-columns:1fr; gap:28px; align-items:start; }
+    @media (min-width:860px) { .layout { grid-template-columns:1.05fr .95fr; } }
+    .panel { background:var(--moss2); border:2px solid var(--line); border-radius:12px; padding:20px; }
+    .hero-wrap { background:#0a1610; border:2px solid var(--line); border-radius:12px; overflow:hidden; }
+    .hero-wrap img { display:block; width:100%; aspect-ratio:1; object-fit:cover; }
+    .hero-cap { display:flex; justify-content:space-between; padding:10px 12px 12px; font-size:.9rem; }
+    .hero-cap strong { color:var(--goldl); }
+    .hero-cap span { opacity:.7; }
+    .thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:12px; }
+    .thumbs button { padding:0; border:2px solid var(--line); border-radius:8px; overflow:hidden; background:#0a1610; cursor:pointer; aspect-ratio:1; }
+    .thumbs button img { display:block; width:100%; height:100%; object-fit:cover; }
+    .thumbs button:hover, .thumbs button.active { border-color:var(--gold); }
+    h2 { margin:0 0 16px; color:var(--goldl); letter-spacing:.06em; text-transform:uppercase; font-size:1.15rem; }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:18px; }
+    .stat { background:rgba(11,26,18,.6); border:1px solid var(--line); border-radius:8px; padding:10px 8px; text-align:center; }
+    .stat b { display:block; color:var(--goldl); font-size:1.15rem; }
+    .stat span { font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); }
+    .row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin:12px 0; }
+    label { color:var(--gold); font-size:.9rem; }
+    input[type="number"] { width:88px; padding:10px 12px; border:1px solid var(--gold); border-radius:8px; background:#0a1610; color:var(--cream); font:inherit; font-size:1.05rem; }
+    button.btn { appearance:none; border:2px solid var(--gold); background:linear-gradient(180deg,#2a2210,#1a1608); color:var(--goldl); font:inherit; letter-spacing:.08em; text-transform:uppercase; padding:12px 18px; border-radius:8px; cursor:pointer; }
+    button.btn:hover { background:#3a2e12; }
+    button.btn:disabled { opacity:.45; cursor:not-allowed; }
+    button.btn.primary { background:linear-gradient(180deg,#c9a227,#8a6e14); color:#0b1a12; font-weight:700; }
+    button.btn.primary:hover { filter:brightness(1.08); }
+    .wallet { font-size:.85rem; color:var(--muted); word-break:break-all; }
+    .wallet strong { color:var(--cream); }
+    .warn,.ok,.err,.info { margin-top:12px; padding:10px 12px; border-radius:8px; font-size:.9rem; line-height:1.45; }
+    .warn { display:none; background:rgba(58,16,32,.55); border:1px solid #c9a227; color:var(--goldl); }
+    .warn.show { display:block; }
+    .ok { background:rgba(27,58,40,.7); border:1px solid var(--gold); }
+    .err { background:rgba(58,16,32,.7); border:1px solid #c45; }
+    .info { background:rgba(11,26,18,.5); border:1px solid var(--line); color:var(--muted); }
+    a { color:var(--goldl); }
+    .contract { margin-top:16px; font-size:.78rem; color:var(--muted); word-break:break-all; }
+    footer { text-align:center; padding:24px; color:var(--muted); font-size:.8rem; border-top:1px solid var(--line); }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sherwood Hoods mint</h1>
+    <p class="sub">4444 outlaws of Sherwood · Robinhood Chain</p>
+    <p class="meta">HOOD · public mint</p>
+  </header>
+  <div class="wrap">
+    <div class="layout">
+      <section>
+        <div class="hero-wrap">
+          <img id="hero" src="https://cdn.jsdelivr.net/gh/HockmaAI/sherwood-hoods-assets@main/svg/11.svg" alt="Sherwood Hoods #11" width="1000" height="1000" />
+          <div class="hero-cap"><strong id="heroLabel">#11</strong><span>HOOD</span></div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+      </section>
+      <section class="panel">
+        <h2>Mint a Hood</h2>
+        <div class="stats">
+          <div class="stat"><b id="minted">—</b><span>Minted</span></div>
+          <div class="stat"><b id="left">—</b><span>Left</span></div>
+          <div class="stat"><b id="price">—</b><span>Price</span></div>
+        </div>
+        <div id="closedWarn" class="warn">Mint is currently closed. You can still connect a wallet and watch supply, but public minting will fail until it opens.</div>
+        <div id="pausedWarn" class="warn">Contract is paused. Minting is temporarily unavailable.</div>
+        <div class="row">
+          <button class="btn" id="connectBtn" type="button">Connect wallet</button>
+          <div class="wallet" id="walletStatus">No wallet connected</div>
+        </div>
+        <div class="row">
+          <label for="qty">Qty</label>
+          <input id="qty" type="number" min="1" max="20" value="1" />
+          <button class="btn primary" id="mintBtn" type="button" disabled>Mint</button>
+        </div>
+        <p class="info" id="costLine">Total: —</p>
+        <div id="msg"></div>
+        <p class="contract">Contract <a id="contractLink" href="https://robinhoodchain.blockscout.com/address/0xeC4EC80fa247c96c33478BF41100f93db77211d4" target="_blank" rel="noopener">0xeC4EC80fa247c96c33478BF41100f93db77211d4</a> · Robinhood Chain (4663)</p>
+      </section>
+    </div>
+  </div>
+  <footer>Sherwood Hoods · Robinhood Chain · pay with native ETH</footer>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.5/dist/ethers.umd.min.js"></script>
+  <script>
+    const CONTRACT = "0xeC4EC80fa247c96c33478BF41100f93db77211d4";
+    const CHAIN_ID = 4663;
+    const CHAIN_HEX = "0x1237";
+    const RPC = "https://rpc.mainnet.chain.robinhood.com";
+    const EXPLORER = "https://robinhoodchain.blockscout.com";
+    const SVG = (id) => "https://cdn.jsdelivr.net/gh/HockmaAI/sherwood-hoods-assets@main/svg/" + id + ".svg";
+    const THUMBS = [1, 2, 5, 8, 11, 13, 16, 23];
+    const ABI = [
+      "function mintOpen() view returns (bool)",
+      "function mintPrice() view returns (uint256)",
+      "function totalMinted() view returns (uint256)",
+      "function MAX_SUPPLY() view returns (uint256)",
+      "function paused() view returns (bool)",
+      "function publicMint(uint256 qty) payable"
+    ];
+    const CHAIN_PARAMS = {
+      chainId: CHAIN_HEX,
+      chainName: "Robinhood Chain",
+      nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
+      rpcUrls: [RPC],
+      blockExplorerUrls: [EXPLORER]
+    };
+    const $ = (id) => document.getElementById(id);
+    const publicProvider = new ethers.JsonRpcProvider(RPC);
+    const publicContract = new ethers.Contract(CONTRACT, ABI, publicProvider);
+    let state = { mintOpen: false, mintPrice: 0n, totalMinted: 0n, maxSupply: 4444n, paused: false };
+    let account = null;
+    let browserProvider = null;
+    function setHero(id) {
+      $("hero").src = SVG(id);
+      $("hero").alt = "Sherwood Hoods #" + id;
+      $("heroLabel").textContent = "#" + id;
+      document.querySelectorAll("#thumbs button").forEach((b) => {
+        b.classList.toggle("active", b.dataset.id === String(id));
+      });
+    }
+    function renderThumbs() {
+      const box = $("thumbs");
+      THUMBS.forEach((id) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.dataset.id = String(id);
+        if (id === 11) btn.classList.add("active");
+        btn.innerHTML = "<img src=\"" + SVG(id) + "\" alt=\"#" + id + "\" />";
+        btn.addEventListener("click", () => setHero(id));
+        box.appendChild(btn);
+      });
+    }
+    function showMsg(kind, html) { $("msg").innerHTML = "<div class=\"" + kind + "\">" + html + "</div>"; }
+    function fmtEth(wei) { try { return ethers.formatEther(wei) + " ETH"; } catch (e) { return "—"; } }
+    function qtyValue() {
+      const n = parseInt($("qty").value, 10);
+      if (!Number.isFinite(n) || n < 1) return 1;
+      if (n > 20) return 20;
+      return n;
+    }
+    function updateCost() {
+      const qty = qtyValue();
+      $("qty").value = String(qty);
+      $("costLine").textContent = "Total: " + fmtEth(state.mintPrice * BigInt(qty)) + " for " + qty + " hood" + (qty === 1 ? "" : "s");
+    }
+    function renderState() {
+      $("minted").textContent = state.totalMinted.toString();
+      const left = state.maxSupply - state.totalMinted;
+      $("left").textContent = left < 0n ? "0" : left.toString();
+      $("price").textContent = fmtEth(state.mintPrice);
+      $("closedWarn").classList.toggle("show", !state.mintOpen);
+      $("pausedWarn").classList.toggle("show", !!state.paused);
+      $("mintBtn").disabled = !account || !state.mintOpen || state.paused || state.totalMinted >= state.maxSupply;
+      updateCost();
+    }
+    async function refreshState() {
+      try {
+        const [mintOpen, mintPrice, totalMinted, maxSupply, paused] = await Promise.all([
+          publicContract.mintOpen(),
+          publicContract.mintPrice(),
+          publicContract.totalMinted(),
+          publicContract.MAX_SUPPLY(),
+          publicContract.paused()
+        ]);
+        state = { mintOpen, mintPrice, totalMinted, maxSupply, paused };
+        renderState();
+      } catch (e) {
+        showMsg("err", "Could not read mint state from Robinhood Chain RPC. Refresh to try again.");
+      }
+    }
+    function shortAddr(a) { return a.slice(0, 6) + "…" + a.slice(-4); }
+    function friendlyError(err) {
+      const raw = (err && (err.shortMessage || err.reason || err.message)) || String(err);
+      const code = err && (err.code || (err.info && err.info.error && err.info.error.code));
+      if (code === 4001 || /user rejected|rejected the request|denied/i.test(raw)) return "Request rejected in the wallet.";
+      if (/MintClosed/i.test(raw)) return "Mint is closed.";
+      if (/InsufficientPayment/i.test(raw)) return "Insufficient payment for this quantity.";
+      if (/MaxSupplyExceeded/i.test(raw)) return "Not enough supply left for that quantity.";
+      if (/InvalidQuantity/i.test(raw)) return "Invalid quantity.";
+      if (/paused|EnforcedPause/i.test(raw)) return "Contract is paused.";
+      return raw;
+    }
+    async function ensureChain() {
+      const eth = window.ethereum;
+      if (!eth) throw new Error("NO_WALLET");
+      try {
+        await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_HEX }] });
+      } catch (err) {
+        if (err && (err.code === 4902 || /unrecognized chain|unknown chain/i.test(String(err.message || "")))) {
+          await eth.request({ method: "wallet_addEthereumChain", params: [CHAIN_PARAMS] });
+          await eth.request({ method: "wallet_switchEthereumChain", params: [{ chainId: CHAIN_HEX }] });
+        } else { throw err; }
+      }
+      const net = await browserProvider.getNetwork();
+      if (Number(net.chainId) !== CHAIN_ID) throw new Error("Wrong chain. Switch your wallet to Robinhood Chain (4663).");
+    }
+    async function connect() {
+      if (!window.ethereum) {
+        showMsg("err", "No injected wallet found. Install MetaMask or another Ethereum wallet and try again.");
+        return;
+      }
+      try {
+        browserProvider = new ethers.BrowserProvider(window.ethereum);
+        await ensureChain();
+        const accs = await browserProvider.send("eth_requestAccounts", []);
+        account = accs && accs[0] ? ethers.getAddress(accs[0]) : null;
+        if (!account) { showMsg("err", "No account returned by the wallet."); return; }
+        $("walletStatus").innerHTML = "Connected <strong>" + shortAddr(account) + "</strong>";
+        $("connectBtn").textContent = "Connected";
+        showMsg("ok", "Wallet connected on Robinhood Chain.");
+        renderState();
+      } catch (err) {
+        if (err && err.message === "NO_WALLET") {
+          showMsg("err", "No injected wallet found. Install MetaMask or another Ethereum wallet and try again.");
+          return;
+        }
+        showMsg("err", friendlyError(err));
+      }
+    }
+    async function mint() {
+      if (!window.ethereum) {
+        showMsg("err", "No injected wallet found. Install MetaMask or another Ethereum wallet and try again.");
+        return;
+      }
+      if (!account || !browserProvider) {
+        await connect();
+        if (!account) return;
+      }
+      const qty = qtyValue();
+      try {
+        await ensureChain();
+        const signer = await browserProvider.getSigner();
+        const c = new ethers.Contract(CONTRACT, ABI, signer);
+        const value = state.mintPrice * BigInt(qty);
+        showMsg("info", "Confirm the mint in your wallet…");
+        const tx = await c.publicMint(qty, { value });
+        showMsg("info", "Mint submitted. Waiting for confirmation…<br><a href=\"" + EXPLORER + "/tx/" + tx.hash + "\" target=\"_blank\" rel=\"noopener\">View transaction</a>");
+        const receipt = await tx.wait();
+        showMsg("ok", "Mint confirmed. <a href=\"" + EXPLORER + "/tx/" + receipt.hash + "\" target=\"_blank\" rel=\"noopener\">View on Blockscout</a>");
+        await refreshState();
+      } catch (err) {
+        showMsg("err", friendlyError(err));
+      }
+    }
+    if (window.ethereum) {
+      window.ethereum.on && window.ethereum.on("accountsChanged", (accs) => {
+        account = accs && accs[0] ? accs[0] : null;
+        if (account) $("walletStatus").innerHTML = "Connected <strong>" + shortAddr(account) + "</strong>";
+        else { $("walletStatus").textContent = "No wallet connected"; $("connectBtn").textContent = "Connect wallet"; }
+        renderState();
+      });
+      window.ethereum.on && window.ethereum.on("chainChanged", () => { renderState(); });
+    }
+    $("connectBtn").addEventListener("click", connect);
+    $("mintBtn").addEventListener("click", mint);
+    $("qty").addEventListener("input", updateCost);
+    $("qty").addEventListener("change", updateCost);
+    renderThumbs();
+    setHero(11);
+    refreshState();
+    setInterval(refreshState, 20000);
+  </script>
+</body>
+</html>
